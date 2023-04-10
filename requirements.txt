@@ -1,0 +1,7 @@
+django 
+djangorestframework 
+djangorestframework-simplejwt
+django-admin-tailwind
+python-decouple
+pillow
+Faker

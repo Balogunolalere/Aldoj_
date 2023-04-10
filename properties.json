@@ -1,0 +1,19 @@
+[
+    {
+      "property_type": "AG",
+      "title": "Property 1",
+      "description": "Property 1 description",
+      "location": "Property 1 location",
+      "area": 100.0,
+      "price": 100.0
+    },
+    {
+      "property_type": "RE",
+      "title": "Property 2",
+      "description": "Property 2 description",
+      "location": "Property 2 location",
+      "area": 200.0,
+      "price": 200.0
+    }
+  ]
+  

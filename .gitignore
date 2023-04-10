@@ -1,0 +1,5 @@
+aldoj_app/__pycache__/*
+aldoj_app/management/__pycache__/*
+aldoj_app/management/commands/__pycache__/*
+aldoj_project/__pycache__/*
+env/*

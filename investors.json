@@ -1,0 +1,13 @@
+[
+    {
+      "property_id": 1,
+      "investor_id": 2,
+      "amount": 1000.0
+    },
+    {
+      "property_id": 3,
+      "investor_id": 4,
+      "amount": 2000.0
+    }
+  ]
+  
