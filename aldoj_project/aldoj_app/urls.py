@@ -10,4 +10,5 @@ urlpatterns = [
     path('crops/<int:pk>/', views.CropDetail.as_view(), name='crop_detail'),  # Add this URL pattern for the crop detail view
     path('register/', views.RegisterView.as_view(), name='register'),
     path('login/', views.LoginView.as_view(), name='login'),
+    path('register-admin/', views.AdminRegisterView.as_view(), name='register_admin'),
 ]

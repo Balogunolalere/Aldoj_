@@ -1,11 +1,9 @@
-from django.test import TestCase, Client
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
 from .models import Property, Investment, Crop
 from .serializers import PropertySerializer, InvestmentSerializer, CropSerializer
 from django.contrib.auth.models import User
-from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class PropertyTest(APITestCase):

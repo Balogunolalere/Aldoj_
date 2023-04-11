@@ -70,8 +70,16 @@ REST_FRAMEWORK = {
     ],
     'SEARCH_PARAM': 'search',
     'ORDERING_PARAM': 'ordering',
-    'DEFAULT_PAGINATION_CLASS' : 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '50/hour',
+        'user': '500/hour'
+    }
 }
 
 LOGGING = {

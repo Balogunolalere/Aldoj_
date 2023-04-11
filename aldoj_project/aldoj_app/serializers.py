@@ -12,14 +12,19 @@ class UserSerializer(serializers.ModelSerializer):
 class PropertySerializer(serializers.ModelSerializer):
     class Meta:
         model = Property
-        fields = '__all__'
+        fields = ['id', 'title', 'description', 'property_type', 'location', 'area', 'price']
 
 class InvestmentSerializer(serializers.ModelSerializer):
+    property = PropertySerializer(read_only=True)
+    investor = serializers.StringRelatedField()
+
     class Meta:
         model = Investment
-        fields = '__all__'
+        fields = ['id', 'amount', 'date', 'property', 'investor']
 
 class CropSerializer(serializers.ModelSerializer):
+    property = PropertySerializer()
+
     class Meta:
         model = Crop
-        fields = '__all__'
+        fields = ['id', 'name', 'yield_per_hectare', 'property']

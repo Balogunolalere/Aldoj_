@@ -1,6 +1,6 @@
 from rest_framework import generics
 from .models import Property, Investment, Crop
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated, IsAdminUser
 from .permissions import IsOwnerOrAdmin, IsAdminOrReadOnly
 from .serializers import PropertySerializer, InvestmentSerializer, CropSerializer
 from rest_framework import status
@@ -26,17 +26,18 @@ class PropertyDetail(generics.RetrieveAPIView):  # Add this class for the proper
 class InvestmentListCreate(generics.ListCreateAPIView):
     queryset = Investment.objects.select_related('property', 'investor').order_by('property')
     serializer_class = InvestmentSerializer
-    permission_classes = [IsAuthenticated, IsOwnerOrAdmin]
+    permission_classes = [IsOwnerOrAdmin]
 
-    # should only list investments for the logged in user
     def get_queryset(self):
+        if self.request.user.is_staff or self.request.user.is_superuser:
+            return self.queryset.all()
         return self.queryset.filter(investor=self.request.user)
 
 
 class InvestmentDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Investment.objects.select_related('property', 'investor')
     serializer_class = InvestmentSerializer
-    permission_classes = [IsAuthenticated, IsOwnerOrAdmin]
+    permission_classes = [IsOwnerOrAdmin]
 
 class CropListCreate(generics.ListCreateAPIView):
     queryset = Crop.objects.all().order_by('name')
@@ -85,3 +86,23 @@ class LoginView(APIView):
         access_token = str(refresh.access_token)
 
         return Response({'access': access_token})
+
+class AdminRegisterView(APIView):
+    """Register a new admin user."""
+    permission_classes = [IsAdminUser]
+
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        if not username or not password:
+            return Response({'error': 'Username and password are required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if User.objects.filter(username=username).exists():
+            return Response({'error': 'Username already exists'}, status=status.HTTP_409_CONFLICT)
+
+        user = User(username=username, is_staff=True, is_superuser=True)
+        user.set_password(password)
+        user.save()
+
+        return Response({'message': 'Admin registered successfully'}, status=status.HTTP_201_CREATED)
